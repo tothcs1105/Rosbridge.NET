@@ -2,7 +2,7 @@
 {
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public abstract class RosServiceClient : IRosServiceClient
+    public abstract class RosServiceClientBase : IRosServiceClient
     {
     }
 }

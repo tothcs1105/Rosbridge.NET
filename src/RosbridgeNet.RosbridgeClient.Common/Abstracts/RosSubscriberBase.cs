@@ -5,9 +5,9 @@
     using RosbridgeNet.RosbridgeClient.Common.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public abstract class RosSubscriber<TRosMessage> : RosTopicUser<TRosMessage>, IRosSubscriber<TRosMessage> where TRosMessage : class, new()
+    public abstract class RosSubscriberBase<TRosMessage> : RosTopicUserBase<TRosMessage>, IRosSubscriber<TRosMessage> where TRosMessage : class, new()
     {
-        public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
+        public RosSubscriberBase(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
             this.rosbridgeMessageDispatcher.RosbridgeMessageReceived += RosbridgeMessageReceived;
         }
@@ -26,6 +26,11 @@
             object unsubscribeMessage = this.CreateUnsubscribeMessage();
 
             return this.rosbridgeMessageDispatcher.SendAsync(unsubscribeMessage);
+        }
+
+        protected void RaiseRosMessageReceived(RosMessageReceivedEventArgs<TRosMessage> args)
+        {
+            RosMessageReceived?.Invoke(this, args);
         }
 
         protected abstract object CreateSubscribeMessage();

@@ -6,11 +6,11 @@
     using RosbridgeNet.RosbridgeClient.Common.Exceptions;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public abstract class RosTopicUser<TRosMessage> : IRosTopicUser<TRosMessage> where TRosMessage : class, new()
+    public abstract class RosTopicUserBase<TRosMessage> : IRosTopicUser<TRosMessage> where TRosMessage : class, new()
     {
         protected readonly IRosbridgeMessageDispatcher rosbridgeMessageDispatcher;
 
-        public RosTopicUser(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic)
+        public RosTopicUserBase(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic)
         {
             if (rosbridgeMessageDispatcher == null)
             {

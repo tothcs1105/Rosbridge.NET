@@ -4,9 +4,9 @@
     using System.Threading.Tasks;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public abstract class RosPublisher<TRosMessage> : RosTopicUser<TRosMessage>, IRosPublisher<TRosMessage> where TRosMessage : class, new()
+    public abstract class RosPublisherBase<TRosMessage> : RosTopicUserBase<TRosMessage>, IRosPublisher<TRosMessage> where TRosMessage : class, new()
     {
-        public RosPublisher(IRosbridgeMessageDispatcher messageDispatcher, string topic) : base(messageDispatcher, topic)
+        public RosPublisherBase(IRosbridgeMessageDispatcher messageDispatcher, string topic) : base(messageDispatcher, topic)
         {
         }
 

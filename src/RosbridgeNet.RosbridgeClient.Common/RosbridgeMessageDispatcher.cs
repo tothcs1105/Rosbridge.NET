@@ -78,7 +78,7 @@
 
                        JObject jsonMessage = this.rosbridgeMessageSerializer.Deserialize(serializedMessage);
 
-                       RosbridgeMessageReceived?.Invoke(this, new RosbridgeMessageReceivedEventArgs(jsonMessage));
+                       this.RosbridgeMessageReceived?.Invoke(this, new RosbridgeMessageReceivedEventArgs(jsonMessage));
                    }
                });
 
