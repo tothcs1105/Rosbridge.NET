@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CodeGenerator", "CodeGenera
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RosbridgeClient", "RosbridgeClient", "{0D9C3C91-BDB0-48E2-9313-F25CBD8278B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosbridgeNet.RosbridgeClient.Interfaces", "src\RosbridgeNet.RosbridgeClient.Interfaces\RosbridgeNet.RosbridgeClient.Interfaces.csproj", "{9D8B949C-83CE-4224-97AD-6C5ECA5D658F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RosbridgeNet.RosbridgeClient.Common", "src\RosbridgeNet.RosbridgeClient.Common\RosbridgeNet.RosbridgeClient.Common.csproj", "{F51CB738-E801-4A3B-9381-A7AED9957130}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosbridgeNet.RosbridgeClient.Common", "src\RosbridgeNet.RosbridgeClient.Common\RosbridgeNet.RosbridgeClient.Common.csproj", "{F51CB738-E801-4A3B-9381-A7AED9957130}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosbridgeNet.RosbridgeClient.ProtocolV2", "src\RosbridgeNet.RosbridgeClient.ProtocolV2\RosbridgeNet.RosbridgeClient.ProtocolV2.csproj", "{2D745749-7FE0-44BF-ADDE-8D80A8515687}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RosbridgeNet.RosbridgeClient.ProtocolV2", "src\RosbridgeNet.RosbridgeClient.ProtocolV2\RosbridgeNet.RosbridgeClient.ProtocolV2.csproj", "{2D745749-7FE0-44BF-ADDE-8D80A8515687}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosbridgeNet.Client.WPF", "samples\RosbridgeNet.Client.WPF\RosbridgeNet.Client.WPF.csproj", "{2A2756A7-1B0F-4257-8F16-E9CB6C74D624}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RosbridgeNet.Client.Console", "samples\RosbridgeNet.Client.Console\RosbridgeNet.Client.Console.csproj", "{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +27,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9D8B949C-83CE-4224-97AD-6C5ECA5D658F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9D8B949C-83CE-4224-97AD-6C5ECA5D658F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9D8B949C-83CE-4224-97AD-6C5ECA5D658F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9D8B949C-83CE-4224-97AD-6C5ECA5D658F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{F51CB738-E801-4A3B-9381-A7AED9957130}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F51CB738-E801-4A3B-9381-A7AED9957130}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F51CB738-E801-4A3B-9381-A7AED9957130}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -43,6 +39,10 @@ Global
 		{2A2756A7-1B0F-4257-8F16-E9CB6C74D624}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A2756A7-1B0F-4257-8F16-E9CB6C74D624}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A2756A7-1B0F-4257-8F16-E9CB6C74D624}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,10 +50,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{3CE96807-3554-415F-B196-AB410AC0C773} = {F4469ACB-CF4D-4265-8DE5-85ABA32BB272}
 		{0D9C3C91-BDB0-48E2-9313-F25CBD8278B3} = {F4469ACB-CF4D-4265-8DE5-85ABA32BB272}
-		{9D8B949C-83CE-4224-97AD-6C5ECA5D658F} = {0D9C3C91-BDB0-48E2-9313-F25CBD8278B3}
 		{F51CB738-E801-4A3B-9381-A7AED9957130} = {0D9C3C91-BDB0-48E2-9313-F25CBD8278B3}
 		{2D745749-7FE0-44BF-ADDE-8D80A8515687} = {0D9C3C91-BDB0-48E2-9313-F25CBD8278B3}
 		{2A2756A7-1B0F-4257-8F16-E9CB6C74D624} = {1697E3A9-E85C-45DF-B611-C1B5199B38C7}
+		{6F3CA7E5-3E29-4DD8-A5CA-E3FFF4A972C6} = {1697E3A9-E85C-45DF-B611-C1B5199B38C7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {123AC092-BA2D-4C11-8C16-723D28A7D189}
