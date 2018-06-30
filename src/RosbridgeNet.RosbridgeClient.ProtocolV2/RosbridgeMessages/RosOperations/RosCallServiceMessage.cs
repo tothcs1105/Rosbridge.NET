@@ -7,7 +7,7 @@
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
 
     [DataContract]
-    public class RosCallServiceMessage : RosMessageBase
+    public sealed class RosCallServiceMessage : RosMessageBase
     {
         [DataMember(Name = "service", IsRequired = true)]
         public string Service { get; set; }

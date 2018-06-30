@@ -4,7 +4,7 @@
     using Newtonsoft.Json.Linq;
 
     [DataContract]
-    public class RosServiceResponseMessage : RosMessageBase
+    public sealed class RosServiceResponseMessage : RosMessageBase
     {
         [DataMember(Name = "service", IsRequired = true)]
         public string Service { get; set; }

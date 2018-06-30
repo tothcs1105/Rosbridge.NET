@@ -6,7 +6,7 @@
     using Newtonsoft.Json.Converters;
 
     [DataContract]
-    public class RosSubscribeMessage : RosTopicMessageBase
+    public sealed class RosSubscribeMessage : RosTopicMessageBase
     {
         [DataMember(Name = "type", IsRequired = false)]
         public string Type { get; set; }

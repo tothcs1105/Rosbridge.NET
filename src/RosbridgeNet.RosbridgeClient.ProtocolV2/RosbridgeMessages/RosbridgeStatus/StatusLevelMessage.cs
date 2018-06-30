@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class StatusLevelMessage : SetStatusLevelMessage
+    public sealed class StatusLevelMessage : SetStatusLevelMessage
     {
         [DataMember(Name = "msg", IsRequired = true)]
         public string Message { get; set; }

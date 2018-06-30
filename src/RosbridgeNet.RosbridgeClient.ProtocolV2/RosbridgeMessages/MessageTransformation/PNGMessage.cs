@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class PNGMessage : RosbridgeMessageBase
+    public sealed class PNGMessage : RosbridgeMessageBase
     {
         [DataMember(Name = "id", IsRequired = false)]
         public string Id { get; set; }

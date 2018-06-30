@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class FragmentedMessage : RosbridgeMessageBase
+    public sealed class FragmentedMessage : RosbridgeMessageBase
     {
         [DataMember(Name = "id", IsRequired = true)]
         public string Id { get; set; }

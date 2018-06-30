@@ -3,9 +3,10 @@
     using RosbridgeNet.RosbridgeClient.Common.Abstracts;
     using RosbridgeNet.RosbridgeClient.Common.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
 
-    public class RosSubscriber<TRosMessage> : RosSubscriberBase<TRosMessage> where TRosMessage : class, new()
+    public sealed class RosSubscriber<TRosMessage> : RosSubscriberBase<TRosMessage>, IRosSubscriberV2<TRosMessage> where TRosMessage : class, new()
     {
         public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
@@ -14,6 +15,7 @@
         }
 
         public RosSubscribeMessage RosSubscribeMessage { get; private set; }
+
         public RosUnsubscribeMessage RosUnsubscribeMessage { get; private set; }
 
         protected override object CreateSubscribeMessage()
@@ -21,7 +23,7 @@
             this.RosSubscribeMessage.Topic = this.Topic;
             this.RosSubscribeMessage.Type = this.Type;
 
-            return RosSubscribeMessage;
+            return this.RosSubscribeMessage;
         }
 
         protected override object CreateUnsubscribeMessage()

@@ -6,7 +6,7 @@
     using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public class RosbridgeMessageSerializer : IRosbridgeMessageSerializer
+    public sealed class RosbridgeMessageSerializer : IRosbridgeMessageSerializer
     {
         private const string EncodingType = "US-ASCII";
 

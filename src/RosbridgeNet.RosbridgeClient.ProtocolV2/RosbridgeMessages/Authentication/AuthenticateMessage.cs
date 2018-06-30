@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class AuthenticateMessage : RosbridgeMessageBase
+    public sealed class AuthenticateMessage : RosbridgeMessageBase
     {
         [DataMember(Name = "mac", IsRequired = true)]
         public string MacAddress { get; set; }

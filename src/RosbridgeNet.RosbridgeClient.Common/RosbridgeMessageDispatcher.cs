@@ -30,6 +30,7 @@
 
             this.socket = socket;
             this.rosbridgeMessageSerializer = rosbridgeMessageSerializer;
+            this.CurrentState = RosbridgeMessageDispatcherStates.Stopped;
         }
 
         public event RosbridgeMessageReceivedHanlder RosbridgeMessageReceived;

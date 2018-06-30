@@ -3,7 +3,7 @@
     using System.Runtime.Serialization;
 
     [DataContract]
-    public class RosAdvertiseMessage : RosTopicMessageBase
+    public sealed class RosAdvertiseMessage : RosTopicMessageBase
     {
         [DataMember(Name = "type", IsRequired = true)]
         public string Type { get; set; }
