@@ -6,6 +6,7 @@
     using RosbridgeNet.RosbridgeClient.Common;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Wrappers;
 
@@ -25,6 +26,8 @@
             IRosbridgeMessageSerializer messageSerializer = new RosbridgeMessageSerializer();
             IRosbridgeMessageDispatcher messageDispatcher = new RosbridgeMessageDispatcher(socket, messageSerializer);
             RosPublisher<Twist> publisher = new RosPublisher<Twist>(messageDispatcher, "/turtle1/cmd_vel");
+
+            RosPublisher publisher2 = new RosPublisher(messageDispatcher, "/turtle1/cmd_vel", "geometry_msgs/Twist");
 
             messageDispatcher.StartAsync().ContinueWith((publish) =>
             {

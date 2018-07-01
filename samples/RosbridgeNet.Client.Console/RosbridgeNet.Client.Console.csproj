@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\RosbridgeNet.RosbridgeClient.Common\RosbridgeNet.RosbridgeClient.Common.csproj" />
-    <ProjectReference Include="..\..\src\RosbridgeNet.RosbridgeClient.ProtocolV2\RosbridgeNet.RosbridgeClient.ProtocolV2.csproj" />
+    <ProjectReference Include="..\..\src\RosbridgeClient\RosbridgeNet.RosbridgeClient.Common\RosbridgeNet.RosbridgeClient.Common.csproj" />
+    <ProjectReference Include="..\..\src\RosbridgeClient\RosbridgeNet.RosbridgeClient.ProtocolV2\RosbridgeNet.RosbridgeClient.ProtocolV2.csproj" />
   </ItemGroup>
 
 </Project>
