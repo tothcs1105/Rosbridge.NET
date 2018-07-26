@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RosbridgeNet.RosbridgeClient</id>
+    <version>1.0.0</version>
+    <authors>Csaba Toth</authors>
+    <owners>Csaba Toth</owners>
+    <licenseUrl>https://github.com/tothcs1105/Rosbridge.NET</licenseUrl>
+    <projectUrl>https://github.com/tothcs1105/Rosbridge.NET</projectUrl>
+    <iconUrl>https://github.com/tothcs1105/Rosbridge.NET/blob/master/nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Rosbridge communication framework</description>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>ROS Rosbridge Robot Operating System Client</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="11.0.2" />
+	  <dependency id="NETStandard.Library" version="1.6.1" />
+	  <dependency id="System.Net.WebSockets.Client" version="4.3.2" />
+    </dependencies>
+  </metadata>
+</package>

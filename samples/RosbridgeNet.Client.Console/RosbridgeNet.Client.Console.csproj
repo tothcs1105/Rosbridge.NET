@@ -5,4 +5,9 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\RosbridgeClient\RosbridgeNet.RosbridgeClient.Common\RosbridgeNet.RosbridgeClient.Common.csproj" />
+    <ProjectReference Include="..\..\src\RosbridgeClient\RosbridgeNet.RosbridgeClient.ProtocolV2\RosbridgeNet.RosbridgeClient.ProtocolV2.csproj" />
+  </ItemGroup>
+
 </Project>
