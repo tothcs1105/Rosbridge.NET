@@ -7,15 +7,14 @@
     using System.Threading.Tasks;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Exceptions;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces;
 
     public sealed class Socket : ISocket
     {
-        private readonly IClientWebSocket clientWebSocket;
+        private readonly ClientWebSocket clientWebSocket;
         private readonly CancellationTokenSource cancellationTokenSource;
         private bool disposed;
 
-        public Socket(IClientWebSocket clientWebSocket, Uri uri, CancellationTokenSource cancellationTokenSource)
+        public Socket(ClientWebSocket clientWebSocket, Uri uri, CancellationTokenSource cancellationTokenSource)
         {
             if (clientWebSocket == null)
             {
