@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>RosbridgeNet.RosbridgeClient.Common</id>
+    <version>1.0.0</version>
+    <authors>Csaba Tóth</authors>
+    <owners>tothcs1105</owners>
+    <projectUrl>https://github.com/tothcs1105/Rosbridge.NET</projectUrl>
+    <iconUrl>https://github.com/tothcs1105/Rosbridge.NET/blob/master/nuget.png?raw=true</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Rosbridge client. Rosbridge protocol independent implementation.</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2018</copyright>
+    <tags>ROS Robot Operating System Rosbridge Client</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="11.0.2" />
+	  <dependency id="NETStandard.Library" version="1.6.1" />
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="bin\Debug\netstandard1.3\RosbridgeNet.RosbridgeClient.Common.dll" target="lib\netstandard1.3\RosbridgeNet.RosbridgeClient.Common.dll" />
+  </files>
+</package>
