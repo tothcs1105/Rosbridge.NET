@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>RosbridgeNet.RosbridgeClient.ProtocolV2</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Csaba Tóth</authors>
     <owners>tothcs1105</owners>
     <projectUrl>https://github.com/tothcs1105/Rosbridge.NET</projectUrl>
