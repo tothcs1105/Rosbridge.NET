@@ -1,11 +1,17 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces
 {
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
 
     public interface IRosSubscriber<TRosMessage> : Common.Generics.Interfaces.IRosSubscriber<TRosMessage> where TRosMessage : class, new()
     {
-        RosSubscribeMessage RosSubscribeMessage { get; }
+        MessageCompressionLevel? MessageCompressionLevel { get; }
 
-        RosUnsubscribeMessage RosUnsubscribeMessage { get; }
+        int? FragmentSize { get; }
+
+        string MessageId { get; }
+
+        int? ThrottleRate { get; }
+
+        int? QueueLength { get; }
     }
 }

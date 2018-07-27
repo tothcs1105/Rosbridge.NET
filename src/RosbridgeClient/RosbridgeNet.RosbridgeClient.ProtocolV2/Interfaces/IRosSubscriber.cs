@@ -8,7 +8,7 @@
 
         int? FragmentSize { get; }
 
-        string Id { get; }
+        string MessageId { get; }
 
         int? ThrottleRate { get; }
 

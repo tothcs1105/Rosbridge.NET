@@ -5,42 +5,52 @@
     using RosbridgeNet.RosbridgeClient.Common.Generics.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations.Generics;
 
 
     public sealed class RosSubscriber<TRosMessage> : RosSubscriberBase<TRosMessage>, IRosSubscriber<TRosMessage> where TRosMessage : class, new()
     {
-        public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : base(
-            rosbridgeMessageDispatcher, topic, type)
+        public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : base(rosbridgeMessageDispatcher, topic, type)
         {
-            this.RosSubscribeMessage = new RosSubscribeMessage();
-            this.RosUnsubscribeMessage = new RosUnsubscribeMessage();
         }
 
         public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
-            this.RosSubscribeMessage = new RosSubscribeMessage();
-            this.RosUnsubscribeMessage = new RosUnsubscribeMessage();
         }
 
-        public RosSubscribeMessage RosSubscribeMessage { get; private set; }
+        public MessageCompressionLevel? MessageCompressionLevel { get; set; }
 
-        public RosUnsubscribeMessage RosUnsubscribeMessage { get; private set; }
+        public int? FragmentSize { get; set; }
+
+        public string MessageId { get; set; }
+
+        public int? ThrottleRate { get; set; }
+
+        public int? QueueLength { get; set; }
 
         protected override object CreateSubscribeMessage()
         {
-            this.RosSubscribeMessage.Topic = this.Topic;
-            this.RosSubscribeMessage.Type = this.Type;
-
-            return this.RosSubscribeMessage;
+            return new RosSubscribeMessage()
+            {
+                Compression = this.MessageCompressionLevel,
+                FragmentSize = this.FragmentSize,
+                Id = this.MessageId,
+                Topic = this.Topic,
+                ThrottleRate = this.ThrottleRate,
+                Type = this.Type,
+                QueueLength = this.QueueLength,
+            };
         }
 
         protected override object CreateUnsubscribeMessage()
         {
-            this.RosUnsubscribeMessage.Topic = this.Topic;
-
-            return this.RosUnsubscribeMessage;
+            return new RosUnsubscribeMessage()
+            {
+                Id = this.MessageId,
+                Topic = this.Topic
+            };
         }
 
         protected override void RosbridgeMessageReceived(object sender, RosbridgeMessageReceivedEventArgs args)

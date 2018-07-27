@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>RosbridgeNet.RosbridgeClient.Common</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Csaba Tóth</authors>
     <owners>tothcs1105</owners>
     <projectUrl>https://github.com/tothcs1105/Rosbridge.NET</projectUrl>
     <iconUrl>https://github.com/tothcs1105/Rosbridge.NET/blob/master/nuget.png?raw=true</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Rosbridge client. Rosbridge protocol independent implementation.</description>
+    <description>A .NET Rosbridge client. The Rosbridge protocol independent implementation.</description>
     <releaseNotes></releaseNotes>
     <copyright>Copyright 2018</copyright>
     <tags>ROS Robot Operating System Rosbridge Client</tags>

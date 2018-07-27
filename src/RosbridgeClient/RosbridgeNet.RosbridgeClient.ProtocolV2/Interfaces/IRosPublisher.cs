@@ -2,6 +2,6 @@
 {
     public interface IRosPublisher : Common.Interfaces.IRosPublisher
     {
-        string PublishMessageId { get; set; }
+        string MessageId { get; set; }
     }
 }

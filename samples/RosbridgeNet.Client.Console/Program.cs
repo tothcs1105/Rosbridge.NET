@@ -7,8 +7,6 @@
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.Wrappers;
 
     class Program
     {
@@ -21,8 +19,7 @@
         {
             Uri uri = new Uri("ws://localhost:9090");
             CancellationTokenSource cancelTokenSource = new CancellationTokenSource();
-            IClientWebSocket clientWebSocket = new ClientWebSocketWrapper(new ClientWebSocket());
-            ISocket socket = new Socket(clientWebSocket, uri, cancelTokenSource);
+            ISocket socket = new Socket(new ClientWebSocket(), uri, cancelTokenSource);
             IRosbridgeMessageSerializer messageSerializer = new RosbridgeMessageSerializer();
             IRosbridgeMessageDispatcher messageDispatcher = new RosbridgeMessageDispatcher(socket, messageSerializer);
             RosPublisher<Twist> publisher = new RosPublisher<Twist>(messageDispatcher, "/turtle1/cmd_vel");
