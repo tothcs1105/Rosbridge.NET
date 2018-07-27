@@ -20,7 +20,7 @@
 
         public int? FragmentSize { get; set; }
 
-        public string Id { get; set; }
+        public string MessageId { get; set; }
 
         public int? ThrottleRate { get; set; }
 
@@ -32,7 +32,7 @@
             {
                 Compression = this.MessageCompressionLevel,
                 FragmentSize = this.FragmentSize,
-                Id = this.Id,
+                Id = this.MessageId,
                 Topic = this.Topic,
                 ThrottleRate = this.ThrottleRate,
                 Type = this.Type,
@@ -44,7 +44,7 @@
         {
             return new RosUnsubscribeMessage()
             {
-                Id = this.Id,
+                Id = this.MessageId,
                 Topic = this.Topic
             };
         }

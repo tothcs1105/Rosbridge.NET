@@ -14,7 +14,7 @@
         {
         }
 
-        public string PublishMessageId { get; set; }
+        public string MessageId { get; set; }
 
         protected override object CreateAdvertiseMessage()
         {
@@ -37,7 +37,7 @@
         {
             return new RosPublishMessage()
             {
-                Id = this.PublishMessageId,
+                Id = this.MessageId,
                 Topic = this.Topic,
                 Message = message
             };
