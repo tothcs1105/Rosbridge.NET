@@ -1,11 +1,11 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages
 {
-    using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
-    [DataContract]
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public abstract class RosbridgeMessageBase
     {
-        [DataMember(Name = "op", IsRequired = true)]
+        [JsonProperty(PropertyName = "op", Required = Required.Always)]
         public string Operation { get; private set; }
 
         protected RosbridgeMessageBase(string operation)

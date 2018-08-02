@@ -4,7 +4,9 @@
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;
 
-    [DataContract]
+    /// <summary>
+    /// The compression scheme types, which can be used on a messages.
+    /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
     public enum MessageCompressionLevel
     {

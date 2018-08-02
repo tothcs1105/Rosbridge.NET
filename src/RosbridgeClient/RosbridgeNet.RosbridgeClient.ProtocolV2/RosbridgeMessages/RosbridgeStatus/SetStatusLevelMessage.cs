@@ -1,15 +1,24 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosbridgeStatus
 {
-    using System.Runtime.Serialization;
     using Enums;
+    using Newtonsoft.Json;
 
-    [DataContract]
+    /// <summary>
+    /// Set the Rosbridge API status message level.
+    /// </summary>
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public class SetStatusLevelMessage : RosbridgeMessageBase
     {
-        [DataMember(Name = "id", IsRequired = false)]
+        /// <summary>
+        /// Gets or sets the id of the status message.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
-        [DataMember(Name = "level", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the status level.
+        /// </summary>
+        [JsonProperty(PropertyName = "level", Required = Required.Always)]
         public StatusMessageLevel StatusLevel { get; set; }
 
         public SetStatusLevelMessage() : base("set_level")

@@ -1,25 +1,37 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations
 {
-    using System.Runtime.Serialization;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
     using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
 
-    [DataContract]
+    /// <summary>
+    /// A class that contains the required information to call a ROS service.
+    /// </summary>
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public sealed class RosCallServiceMessage : RosMessageBase
     {
-        [DataMember(Name = "service", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the name of the service to call.
+        /// </summary>
+        [JsonProperty(PropertyName = "service", Required = Required.Always)]
         public string Service { get; set; }
 
-        [DataMember(Name = "args", IsRequired = false)]
+        /// <summary>
+        /// Gets or sets the args required by the service.
+        /// </summary>
+        [JsonProperty(PropertyName = "args")]
         public JArray Arguments { get; set; }
 
-        [DataMember(Name = "fragment_size", IsRequired = false)]
+        /// <summary>
+        /// Gets or sets the maximum size that the response message can take before it is fragmented.
+        /// </summary>
+        [JsonProperty(PropertyName = "fragment_size")]
         public int? FragmentSize { get; set; }
 
-        [DataMember(Name = "compression", IsRequired = false)]
-        [JsonConverter(typeof(StringEnumConverter))]
+        /// <summary>
+        /// Gets or sets the compression scheme to be used on messages.
+        /// </summary>
+        [JsonProperty(PropertyName = "compression")]
         public MessageCompressionLevel? Compression { get; set; }
 
         public RosCallServiceMessage() : base("call_service")

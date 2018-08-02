@@ -40,7 +40,7 @@
 
         public bool IsConnected
         {
-            get { return clientWebSocket.State == WebSocketState.Connecting; }
+            get { return clientWebSocket.State == WebSocketState.Open; }
         }
 
         public Task ConnectAsync()

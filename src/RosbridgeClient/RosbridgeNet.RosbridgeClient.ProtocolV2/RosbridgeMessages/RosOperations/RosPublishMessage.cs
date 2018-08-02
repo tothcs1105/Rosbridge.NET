@@ -1,11 +1,17 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations
 {
-    using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
-    [DataContract]
+    /// <summary>
+    /// A class that contains the message that you want to publish to a ROS topic.
+    /// </summary>
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public sealed class RosPublishMessage : RosTopicMessageBase
     {
-        [DataMember(Name = "msg", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the message you want to publish.
+        /// </summary>
+        [JsonProperty(PropertyName = "msg", Required = Required.Always)]
         public object Message { get; set; }
 
         public RosPublishMessage() : base("publish")
