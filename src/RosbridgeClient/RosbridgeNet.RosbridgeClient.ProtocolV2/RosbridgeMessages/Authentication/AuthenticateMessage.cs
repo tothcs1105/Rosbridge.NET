@@ -1,29 +1,53 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Authentication
 {
-    using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
-    [DataContract]
+    /// <summary>
+    /// A claws to send Rosbridge authentication credentials.
+    /// </summary>
+    [JsonObject]
     public sealed class AuthenticateMessage : RosbridgeMessageBase
     {
-        [DataMember(Name = "mac", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the MAC (hashed) string given by the client.
+        /// </summary>
+        [JsonProperty(PropertyName = "mac", Required = Required.Always)]
         public string MacAddress { get; set; }
 
-        [DataMember(Name = "client", IsRequired = true)]
-        public string ClientIPAddress { get; set; }
+        /// <summary>
+        /// Gets or sets the IP of the client.
+        /// </summary>
+        [JsonProperty(PropertyName = "client", Required = Required.Always)]
+        public string ClientIpAddress { get; set; }
 
-        [DataMember(Name = "dest", IsRequired = true)]
-        public string DestinationIPAddress { get; set; }
+        /// <summary>
+        /// Gets or sets the IP of the destination.
+        /// </summary>
+        [JsonProperty(PropertyName = "dest", Required = Required.Always)]
+        public string DestinationIpAddress { get; set; }
 
-        [DataMember(Name = "rand", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets a random string given by the client.
+        /// </summary>
+        [JsonProperty(PropertyName = "rand", Required = Required.Always)]
         public string Random { get; set; }
 
-        [DataMember(Name = "level", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the user level as a string given by the client.
+        /// </summary>
+        [JsonProperty(PropertyName = "level", Required = Required.Always)]
         public string UserLevel { get; set; }
 
-        [DataMember(Name = "t", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the time of the authorization request.
+        /// </summary>
+        [JsonProperty(PropertyName = "t", Required = Required.Always)]
         public int AuthorizaionTime { get; set; }
 
-        [DataMember(Name = "end", IsRequired = true)]
+        /// <summary>
+        /// Gets or sets the end time of the client's session.
+        /// </summary>
+        [JsonProperty(PropertyName = "end", Required = Required.Always)]
         public int ClientEndTime { get; set; }
 
         public AuthenticateMessage() : base("auth")

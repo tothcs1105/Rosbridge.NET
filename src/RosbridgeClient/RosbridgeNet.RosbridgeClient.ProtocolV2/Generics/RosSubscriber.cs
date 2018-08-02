@@ -34,13 +34,13 @@
         {
             return new RosSubscribeMessage()
             {
-                Compression = this.MessageCompressionLevel,
-                FragmentSize = this.FragmentSize,
-                Id = this.MessageId,
+                Id = MessageId,
                 Topic = this.Topic,
-                ThrottleRate = this.ThrottleRate,
                 Type = this.Type,
+                ThrottleRate = this.ThrottleRate,
                 QueueLength = this.QueueLength,
+                FragmentSize = this.FragmentSize,
+                Compression = this.MessageCompressionLevel
             };
         }
 

@@ -30,13 +30,13 @@
         {
             return new RosSubscribeMessage()
             {
-                Compression = this.MessageCompressionLevel,
-                FragmentSize = this.FragmentSize,
                 Id = this.MessageId,
                 Topic = this.Topic,
-                ThrottleRate = this.ThrottleRate,
                 Type = this.Type,
+                ThrottleRate = this.ThrottleRate,
+                FragmentSize = this.FragmentSize,
                 QueueLength = this.QueueLength,
+                Compression = this.MessageCompressionLevel
             };
         }
 
@@ -57,9 +57,7 @@
                 {
                     RosPublishMessage receivedPublishMessage = args.RosbridgeMessage.ToObject<RosPublishMessage>();
 
-                    if (receivedPublishMessage != null &&
-                        !string.IsNullOrEmpty(receivedPublishMessage.Topic) &&
-                        receivedPublishMessage.Topic.Equals(this.Topic))
+                    if (receivedPublishMessage != null && !string.IsNullOrEmpty(receivedPublishMessage.Topic) && receivedPublishMessage.Topic.Equals(this.Topic))
                     {
                         RaiseRosMessageReceived(new RosMessageReceivedEventArgs(receivedPublishMessage.Message));
                     }

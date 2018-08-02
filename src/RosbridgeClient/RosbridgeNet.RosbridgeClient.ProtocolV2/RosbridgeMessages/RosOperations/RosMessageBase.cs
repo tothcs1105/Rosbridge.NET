@@ -1,11 +1,17 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations
 {
-    using System.Runtime.Serialization;
+    using Newtonsoft.Json;
 
-    [DataContract]
+    /// <summary>
+    /// The base class for the ROS operation message classes.
+    /// </summary>
+    [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
     public abstract class RosMessageBase : RosbridgeMessageBase
     {
-        [DataMember(Name = "id", IsRequired = false)]
+        /// <summary>
+        /// Gets or sets the ID of the message.
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         protected RosMessageBase(string operation) : base(operation)
