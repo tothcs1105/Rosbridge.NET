@@ -2,6 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
+    <PackageId>RosbridgeNet.RosbridgeClient.Common</PackageId>
+    <Version>1.0.1</Version>
+    <Authors>Csaba Tóth</Authors>
+    <Company />
+    <Description>A .NET Rosbridge client. The Rosbridge protocol independent implementation.</Description>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageProjectUrl>https://github.com/tothcs1105/Rosbridge.NET</PackageProjectUrl>
+    <PackageIconUrl>https://github.com/tothcs1105/Rosbridge.NET/blob/master/nuget.png?raw=true</PackageIconUrl>
+    <PackageTags>ROS Robot Operating System Rosbridge Client</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
