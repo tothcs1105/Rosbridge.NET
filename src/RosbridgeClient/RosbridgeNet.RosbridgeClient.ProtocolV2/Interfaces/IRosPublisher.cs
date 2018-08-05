@@ -1,7 +1,6 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces
 {
-    public interface IRosPublisher : Common.Interfaces.IRosPublisher
+    public interface IRosPublisher : Common.Interfaces.IRosPublisher, IRosOperator
     {
-        string MessageId { get; set; }
     }
 }

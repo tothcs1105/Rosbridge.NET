@@ -1,7 +1,10 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces
 {
-    public interface IRosPublisher<TRosMessage> : Common.Generics.Interfaces.IRosPublisher<TRosMessage> where TRosMessage : class, new()
+    using System.Threading.Tasks;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces;
+
+    public interface IRosPublisher<TRosMessage> : IRosPublisher where TRosMessage : class, new()
     {
-        string MessageId { get; set; }
+        Task PublishAsync(TRosMessage rosMessage);
     }
 }

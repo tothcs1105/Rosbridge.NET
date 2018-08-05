@@ -47,7 +47,6 @@
         static RosPublisher<Twist> CreatePublisher(IRosbridgeMessageDispatcher messageDispatcher)
         {
             RosPublisher<Twist> publisher = new RosPublisher<Twist>(messageDispatcher, "/turtle1/cmd_vel");
-
             publisher.AdvertiseAsync();
 
             return publisher;

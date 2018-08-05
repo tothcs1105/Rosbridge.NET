@@ -3,12 +3,12 @@
     using Newtonsoft.Json;
 
     /// <summary>
-    /// A class that indicates to ROS that you won't advertise any message in a specific topic no more.
+    /// A class that indicates to ROS that you wish to unsubscribe from a specific topic.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public sealed class RosUnadvertiseMessage : RosTopicMessageBase
+    public sealed class UnsubscribeMessage : TopicMessageBase
     {
-        public RosUnadvertiseMessage() : base("unadvertise")
+        public UnsubscribeMessage() : base("unsubscribe")
         {
         }
     }

@@ -6,7 +6,7 @@
     /// A generic class that contains the message that you want to publish to a ROS topic.
     /// </summary>
     [JsonObject]
-    public sealed class RosPublishMessage<TRosMessage> : RosTopicMessageBase where TRosMessage : class, new()
+    public sealed class PublishMessage<TRosMessage> : TopicMessageBase where TRosMessage : class, new()
     {
         /// <summary>
         /// Gets or sets the message you want to publish.
@@ -14,7 +14,7 @@
         [JsonProperty(PropertyName = "msg", Required = Required.Always)]
         public TRosMessage Message { get; set; }
 
-        public RosPublishMessage() : base("publish")
+        public PublishMessage() : base("publish")
         {
         }
     }

@@ -1,73 +1,39 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Generics
 {
-    using RosbridgeNet.RosbridgeClient.Common.EventArgs;
-    using RosbridgeNet.RosbridgeClient.Common.Generics;
-    using RosbridgeNet.RosbridgeClient.Common.Generics.EventArgs;
+    using RosbridgeNet.RosbridgeClient.Common.Extensions;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Delegates;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.EventArgs;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations.Generics;
 
-
-    public sealed class RosSubscriber<TRosMessage> : RosSubscriberBase<TRosMessage>, IRosSubscriber<TRosMessage> where TRosMessage : class, new()
+    public class RosSubscriber<TRosMessage> : RosSubscriber, IRosSubscriber<TRosMessage> where TRosMessage : class, new()
     {
-        public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : base(rosbridgeMessageDispatcher, topic, type)
-        {
-        }
-
         public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
-        }
-
-        public MessageCompressionLevel? MessageCompressionLevel { get; set; }
-
-        public int? FragmentSize { get; set; }
-
-        public string MessageId { get; set; }
-
-        public int? ThrottleRate { get; set; }
-
-        public int? QueueLength { get; set; }
-
-        protected override object CreateSubscribeMessage()
-        {
-            return new RosSubscribeMessage()
+            if (this.Type == null)
             {
-                Id = MessageId,
-                Topic = this.Topic,
-                Type = this.Type,
-                ThrottleRate = this.ThrottleRate,
-                QueueLength = this.QueueLength,
-                FragmentSize = this.FragmentSize,
-                Compression = this.MessageCompressionLevel
-            };
+                this.Type = typeof(TRosMessage).GetRosMessageType();
+            }
+
+            base.RosMessageReceived += RosMessageReceivedHandler;
         }
 
-        protected override object CreateUnsubscribeMessage()
+        public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : base(rosbridgeMessageDispatcher, topic, type)
         {
-            return new RosUnsubscribeMessage()
-            {
-                Id = this.MessageId,
-                Topic = this.Topic
-            };
+            base.RosMessageReceived += RosMessageReceivedHandler;
         }
 
-        protected override void RosbridgeMessageReceived(object sender, RosbridgeMessageReceivedEventArgs args)
+        public new event RosMessageReceivedHanlder<TRosMessage> RosMessageReceived;
+
+        private void RosMessageReceivedHandler(object sender, Common.EventArgs.RosMessageReceivedEventArgs args)
         {
             if (args != null)
             {
-                if (args.RosbridgeMessage != null)
-                {
-                    RosPublishMessage<TRosMessage> receivedPublishMessage =
-                        args.RosbridgeMessage.ToObject<RosPublishMessage<TRosMessage>>();
+                TRosMessage rosMessage = args.RosMessage as TRosMessage;
 
-                    if (receivedPublishMessage != null &&
-                        !string.IsNullOrEmpty(receivedPublishMessage.Topic) &&
-                        receivedPublishMessage.Topic.Equals(this.Topic))
-                    {
-                        RaiseRosMessageReceived(new RosMessageReceivedEventArgs<TRosMessage>(receivedPublishMessage.Message));
-                    }
+                if (rosMessage != null)
+                {
+                    this.RosMessageReceived?.Invoke(this, new RosMessageReceivedEventArgs<TRosMessage>(rosMessage));
                 }
             }
         }

@@ -14,11 +14,6 @@
                 throw new ArgumentNullException(nameof(rosbridgeMessageDispatcher));
             }
 
-            if (topic == null)
-            {
-                throw new ArgumentNullException(nameof(topic));
-            }
-
             if (string.IsNullOrWhiteSpace(topic))
             {
                 throw new ArgumentException($"{nameof(topic)} cannot be empty!");
@@ -30,12 +25,6 @@
 
         protected RosTopicOperatorBase(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : this(rosbridgeMessageDispatcher, topic)
         {
-            if (type == null)
-            {
-                throw new ArgumentNullException(nameof(type));
-            }
-
-
             if (string.IsNullOrWhiteSpace(type))
             {
                 throw new ArgumentException($"{nameof(type)} cannot be empty!");
@@ -44,7 +33,7 @@
             this.Type = type;
         }
 
-        public string Topic { get; protected set; }
+        public string Topic { get; private set; }
 
         public string Type { get; protected set; }
     }
