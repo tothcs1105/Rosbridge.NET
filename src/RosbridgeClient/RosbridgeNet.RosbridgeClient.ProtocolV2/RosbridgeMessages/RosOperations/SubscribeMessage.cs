@@ -7,7 +7,7 @@
     /// A class that indicates to ROS that you wish to subscribe to a specific topic.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public sealed class RosSubscribeMessage : RosTopicMessageBase
+    public sealed class SubscribeMessage : TopicMessageBase
     {
         /// <summary>
         /// Gets or sets the type of the message used in the topic.
@@ -39,7 +39,7 @@
         [JsonProperty(PropertyName = "compression")]
         public MessageCompressionLevel? Compression { get; set; }
 
-        public RosSubscribeMessage() : base("subscribe")
+        public SubscribeMessage() : base("subscribe")
         {
         }
     }

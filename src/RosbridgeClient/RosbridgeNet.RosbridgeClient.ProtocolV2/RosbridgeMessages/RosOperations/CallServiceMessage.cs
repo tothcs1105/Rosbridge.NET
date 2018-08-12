@@ -8,7 +8,7 @@
     /// A class that contains the required information to call a ROS service.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public sealed class RosCallServiceMessage : RosMessageBase
+    public sealed class CallServiceMessage : RosMessageBase
     {
         /// <summary>
         /// Gets or sets the name of the service to call.
@@ -20,7 +20,7 @@
         /// Gets or sets the args required by the service.
         /// </summary>
         [JsonProperty(PropertyName = "args")]
-        public JArray Arguments { get; set; }
+        public JToken Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum size that the response message can take before it is fragmented.
@@ -34,7 +34,7 @@
         [JsonProperty(PropertyName = "compression")]
         public MessageCompressionLevel? Compression { get; set; }
 
-        public RosCallServiceMessage() : base("call_service")
+        public CallServiceMessage() : base("call_service")
         {
         }
     }

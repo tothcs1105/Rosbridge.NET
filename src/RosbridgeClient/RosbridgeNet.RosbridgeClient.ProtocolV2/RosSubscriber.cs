@@ -1,12 +1,14 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.Common;
     using RosbridgeNet.RosbridgeClient.Common.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
 
-    public sealed class RosSubscriber : RosSubscriberBase, Interfaces.IRosSubscriber
+    public class RosSubscriber : RosSubscriberBase<SubscribeMessage, UnsubscribeMessage>, Interfaces.IRosSubscriber
     {
         public RosSubscriber(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
@@ -26,9 +28,9 @@
 
         public int? QueueLength { get; set; }
 
-        protected override object CreateSubscribeMessage()
+        protected override SubscribeMessage CreateSubscribeMessage()
         {
-            return new RosSubscribeMessage()
+            return new SubscribeMessage()
             {
                 Id = this.MessageId,
                 Topic = this.Topic,
@@ -40,29 +42,36 @@
             };
         }
 
-        protected override object CreateUnsubscribeMessage()
+        protected override UnsubscribeMessage CreateUnsubscribeMessage()
         {
-            return new RosUnsubscribeMessage()
+            return new UnsubscribeMessage()
             {
                 Id = this.MessageId,
                 Topic = this.Topic
             };
         }
 
-        protected override void RosbridgemessageReceivedHandler(object sender, RosbridgeMessageReceivedEventArgs args)
+        protected override RosMessageReceivedEventArgs HandleRosbridgeMessage(JObject rosbridgeMessage)
         {
-            if (args != null)
+            if (rosbridgeMessage != null)
             {
-                if (args.RosbridgeMessage != null)
-                {
-                    RosPublishMessage receivedPublishMessage = args.RosbridgeMessage.ToObject<RosPublishMessage>();
+                PublishMessage receivedPublishMessage = null;
 
-                    if (receivedPublishMessage != null && !string.IsNullOrEmpty(receivedPublishMessage.Topic) && receivedPublishMessage.Topic.Equals(this.Topic))
-                    {
-                        RaiseRosMessageReceived(new RosMessageReceivedEventArgs(receivedPublishMessage.Message));
-                    }
+                try
+                {
+                    receivedPublishMessage = rosbridgeMessage.ToObject<PublishMessage>();
+                }
+                catch (JsonSerializationException e)
+                {
+                }
+
+                if (receivedPublishMessage != null && object.Equals(receivedPublishMessage.Topic, this.Topic))
+                {
+                    return new RosMessageReceivedEventArgs(receivedPublishMessage);
                 }
             }
+
+            return null;
         }
     }
 }

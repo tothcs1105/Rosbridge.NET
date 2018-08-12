@@ -7,6 +7,7 @@
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces;
 
     class Program
     {
@@ -21,24 +22,28 @@
             Subscribe(messageDispatcher);
             var publisher = CreatePublisher(messageDispatcher);
 
+            IRosServiceClient<object, object> serviceClient = new RosServiceClient<object, object>(messageDispatcher, "/clear");
+
+            publisher.PublishAsync(new Twist()
+            {
+                linear = new Vector()
+                {
+                    x = -5,
+                    y = 0,
+                    z = 0
+                },
+                angular = new Vector()
+                {
+                    x = 0,
+                    y = 0,
+                    z = 0
+                }
+            });
+
+            serviceClient.CallServiceAsync().Wait();
+
             while (true)
             {
-
-                publisher.PublishAsync(new Twist()
-                {
-                    linear = new Vector()
-                    {
-                        x = -5,
-                        y = 0,
-                        z = 0
-                    },
-                    angular = new Vector()
-                    {
-                        x = 0,
-                        y = 0,
-                        z = 0
-                    }
-                });
                 Thread.Sleep(3000);
             }
 
@@ -47,7 +52,6 @@
         static RosPublisher<Twist> CreatePublisher(IRosbridgeMessageDispatcher messageDispatcher)
         {
             RosPublisher<Twist> publisher = new RosPublisher<Twist>(messageDispatcher, "/turtle1/cmd_vel");
-
             publisher.AdvertiseAsync();
 
             return publisher;
@@ -73,5 +77,18 @@
             return messageDispatcher;
         }
 
+    }
+
+    public class Spawn
+    {
+        public float x { get; set; }
+        public float y { get; set; }
+        public float theta { get; set; }
+        public string name { get; set; }
+    }
+
+    public class SpawnResponse
+    {
+        public string name { get; set; }
     }
 }

@@ -6,7 +6,7 @@
     /// A base class for topic based ROS operations.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public abstract class RosTopicMessageBase : RosMessageBase
+    public abstract class TopicMessageBase : RosMessageBase
     {
         /// <summary>
         /// Gets or sets the ROS topic.
@@ -14,7 +14,7 @@
         [JsonProperty(PropertyName = "topic", Required = Required.Always)]
         public string Topic { get; set; }
 
-        protected RosTopicMessageBase(string operation) : base(operation)
+        protected TopicMessageBase(string operation) : base(operation)
         {
         }
     }

@@ -6,7 +6,7 @@
     /// A class that contains the message that you want to publish to a ROS topic.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public sealed class RosPublishMessage : RosTopicMessageBase
+    public sealed class PublishMessage : TopicMessageBase
     {
         /// <summary>
         /// Gets or sets the message you want to publish.
@@ -14,7 +14,7 @@
         [JsonProperty(PropertyName = "msg", Required = Required.Always)]
         public object Message { get; set; }
 
-        public RosPublishMessage() : base("publish")
+        public PublishMessage() : base("publish")
         {
         }
     }

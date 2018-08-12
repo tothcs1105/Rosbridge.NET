@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
 
-    public abstract class RosPublisherBase : RosTopicOperatorBase, IRosPublisher
+    public abstract class RosPublisherBase<TAdvertise, TUnadvertise, TPublish> : RosTopicOperatorBase, IRosPublisher where TAdvertise : class, new() where TUnadvertise : class, new() where TPublish : class, new()
     {
         public RosPublisherBase(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
@@ -16,14 +16,14 @@
 
         public Task AdvertiseAsync()
         {
-            object advertiseMessage = this.CreateAdvertiseMessage();
+            TAdvertise advertiseMessage = this.CreateAdvertiseMessage();
 
             return this.rosbridgeMessageDispatcher.SendAsync(advertiseMessage);
         }
 
         public Task UnadvertiseAsync()
         {
-            object unadvertiseMessage = this.CreateUnadvertiseMessage();
+            TUnadvertise unadvertiseMessage = this.CreateUnadvertiseMessage();
 
             return this.rosbridgeMessageDispatcher.SendAsync(unadvertiseMessage);
         }
@@ -35,15 +35,15 @@
                 throw new ArgumentNullException(nameof(rosMessage));
             }
 
-            object publishMessage = this.CreatePublishMessage(rosMessage);
+            TPublish publishMessage = this.CreatePublishMessage(rosMessage);
 
             return this.rosbridgeMessageDispatcher.SendAsync(publishMessage);
         }
 
-        protected abstract object CreateAdvertiseMessage();
+        protected abstract TAdvertise CreateAdvertiseMessage();
 
-        protected abstract object CreateUnadvertiseMessage();
+        protected abstract TUnadvertise CreateUnadvertiseMessage();
 
-        protected abstract object CreatePublishMessage(object message);
+        protected abstract TPublish CreatePublishMessage(object message);
     }
 }

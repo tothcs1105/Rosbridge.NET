@@ -7,7 +7,7 @@
     /// A class that contains information about a ROS service response.
     /// </summary>
     [JsonObject(ItemNullValueHandling = NullValueHandling.Ignore)]
-    public sealed class RosServiceResponseMessage : RosMessageBase
+    public sealed class ServiceResponseMessage : RosMessageBase
     {
         /// <summary>
         /// Gets or sets the name of the service that was called.
@@ -19,9 +19,9 @@
         /// Gets or sets the values that was provided by the service.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
-        public JArray Values { get; set; }
+        public JToken Values { get; set; }
 
-        public RosServiceResponseMessage() : base("service_response")
+        public ServiceResponseMessage() : base("service_response")
         {
         }
     }

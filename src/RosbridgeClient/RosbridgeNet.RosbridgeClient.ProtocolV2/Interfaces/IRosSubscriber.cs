@@ -1,17 +1,9 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces
 {
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
-
-    public interface IRosSubscriber : Common.Interfaces.IRosSubscriber
+    public interface IRosSubscriber : Common.Interfaces.IRosSubscriber, IRosOperator, IFragmentedMessageOperator
     {
-        MessageCompressionLevel? MessageCompressionLevel { get; }
+        int? ThrottleRate { get; set; }
 
-        int? FragmentSize { get; }
-
-        string MessageId { get; }
-
-        int? ThrottleRate { get; }
-
-        int? QueueLength { get; }
+        int? QueueLength { get; set; }
     }
 }

@@ -1,48 +1,27 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2.Generics
 {
-    using RosbridgeNet.RosbridgeClient.Common.Generics;
+    using System.Threading.Tasks;
+    using RosbridgeNet.RosbridgeClient.Common.Extensions;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.Generics.Interfaces;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
-    using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations.Generics;
 
-    public sealed class RosPublisher<TRosMessage> : RosPublisherBase<TRosMessage>, IRosPublisher<TRosMessage> where TRosMessage : class, new()
+    public class RosPublisher<TRosMessage> : RosPublisher, IRosPublisher<TRosMessage> where TRosMessage : class, new()
     {
+        public RosPublisher(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
+        {
+            if (this.Type == null)
+            {
+                this.Type = typeof(TRosMessage).GetRosMessageType();
+            }
+        }
+
         public RosPublisher(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic, string type) : base(rosbridgeMessageDispatcher, topic, type)
         {
         }
 
-        public RosPublisher(IRosbridgeMessageDispatcher messageDispatcher, string topic) : base(messageDispatcher, topic)
+        public Task PublishAsync(TRosMessage rosMessage)
         {
-        }
-
-        public string MessageId { get; set; }
-
-        protected override object CreateAdvertiseMessage()
-        {
-            return new RosAdvertiseMessage()
-            {
-                Topic = this.Topic,
-                Type = this.Type
-            };
-        }
-
-        protected override object CreateUnadvertiseMessage()
-        {
-            return new RosUnsubscribeMessage()
-            {
-                Topic = this.Topic
-            };
-        }
-
-        protected override object CreatePublishMessage(TRosMessage message)
-        {
-            return new RosPublishMessage<TRosMessage>()
-            {
-                Id = this.MessageId,
-                Topic = this.Topic,
-                Message = message
-            };
+            return base.PublishAsync(rosMessage);
         }
     }
 }

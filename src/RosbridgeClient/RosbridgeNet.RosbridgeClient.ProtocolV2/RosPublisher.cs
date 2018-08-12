@@ -4,9 +4,9 @@
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
 
-    public sealed class RosPublisher : RosPublisherBase, RosbridgeClient.ProtocolV2.Interfaces.IRosPublisher
+    public class RosPublisher : RosPublisherBase<AdvertiseMessage, UnadvertiseMessage, PublishMessage>, Interfaces.IRosPublisher
     {
-        public RosPublisher(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
+        protected RosPublisher(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {
         }
 
@@ -16,26 +16,26 @@
 
         public string MessageId { get; set; }
 
-        protected override object CreateAdvertiseMessage()
+        protected override AdvertiseMessage CreateAdvertiseMessage()
         {
-            return new RosAdvertiseMessage()
+            return new AdvertiseMessage()
             {
                 Topic = this.Topic,
                 Type = this.Type
             };
         }
 
-        protected override object CreateUnadvertiseMessage()
+        protected override UnadvertiseMessage CreateUnadvertiseMessage()
         {
-            return new RosUnadvertiseMessage()
+            return new UnadvertiseMessage()
             {
                 Topic = this.Topic
             };
         }
 
-        protected override object CreatePublishMessage(object message)
+        protected override PublishMessage CreatePublishMessage(object message)
         {
-            return new RosPublishMessage()
+            return new PublishMessage()
             {
                 Id = this.MessageId,
                 Topic = this.Topic,
