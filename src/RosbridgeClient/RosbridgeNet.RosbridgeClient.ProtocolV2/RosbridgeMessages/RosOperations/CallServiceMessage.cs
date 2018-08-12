@@ -20,7 +20,7 @@
         /// Gets or sets the args required by the service.
         /// </summary>
         [JsonProperty(PropertyName = "args")]
-        public JArray Arguments { get; set; }
+        public JToken Arguments { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum size that the response message can take before it is fragmented.

@@ -4,7 +4,7 @@
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
 
-    public class RosPublisher : RosPublisherBase<AdvertiseMessage, UnadvertiseMessage, PublishMessage>, RosbridgeClient.ProtocolV2.Interfaces.IRosPublisher
+    public class RosPublisher : RosPublisherBase<AdvertiseMessage, UnadvertiseMessage, PublishMessage>, Interfaces.IRosPublisher
     {
         protected RosPublisher(IRosbridgeMessageDispatcher rosbridgeMessageDispatcher, string topic) : base(rosbridgeMessageDispatcher, topic)
         {

@@ -1,6 +1,7 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.Common
 {
     using System.Threading.Tasks;
+    using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.Common.Delegates;
     using RosbridgeNet.RosbridgeClient.Common.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
@@ -33,15 +34,23 @@
             return this.rosbridgeMessageDispatcher.SendAsync(unsubscribeMessage);
         }
 
-        protected void RaiseRosMessageReceived(RosMessageReceivedEventArgs args)
-        {
-            RosMessageReceived?.Invoke(this, args);
-        }
-
         protected abstract TSubscribe CreateSubscribeMessage();
 
         protected abstract TUnsubscribe CreateUnsubscribeMessage();
 
-        protected abstract void RosbridgeMessageReceivedHandler(object sender, RosbridgeMessageReceivedEventArgs args);
+        protected abstract RosMessageReceivedEventArgs HandleRosbridgeMessage(JObject rosbridgeMessage);
+
+        private void RosbridgeMessageReceivedHandler(object sender, RosbridgeMessageReceivedEventArgs args)
+        {
+            if (args != null)
+            {
+                RosMessageReceivedEventArgs rosMessageReceivedEventArgs = this.HandleRosbridgeMessage(args.RosbridgeMessage);
+
+                if (rosMessageReceivedEventArgs != null)
+                {
+                    RosMessageReceived?.Invoke(this, rosMessageReceivedEventArgs);
+                }
+            }
+        }
     }
 }

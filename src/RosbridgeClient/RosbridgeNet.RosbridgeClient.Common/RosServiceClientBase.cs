@@ -29,26 +29,51 @@
 
         public Task<object> CallServiceAsync(object serviceArgs = null, string serviceName = null)
         {
+            TaskCompletionSource<object> taskCompletionSource = new TaskCompletionSource<object>();
+
+            JObject serviceResponse = this.CallServiceAsyncProtected(serviceArgs, serviceName).Result;
+
+            object serviceResponseObject = serviceResponse.ToObject<object>();
+
+            taskCompletionSource.SetResult(serviceResponseObject);
+
+            return taskCompletionSource.Task;
+        }
+
+        protected Task<JObject> CallServiceAsyncProtected(object serviceArgs = null, string serviceName = null)
+        {
             if (string.IsNullOrWhiteSpace(this.ServiceName) && string.IsNullOrWhiteSpace(serviceName))
             {
                 throw new InvalidOperationException($"Service is not defined!");
             }
 
-            TaskCompletionSource<object> taskCompletion = new TaskCompletionSource<object>();
+            TaskCompletionSource<JObject> taskCompletionSource = new TaskCompletionSource<JObject>();
 
-            RosbridgeMessageReceivedHanlder rosbridgeMessageReceivedHanlder = (object sender, RosbridgeMessageReceivedEventArgs eventArgs) =>
+            RosbridgeMessageReceivedHanlder rosbridgeMessageReceivedHandler = (object sender, RosbridgeMessageReceivedEventArgs eventArgs) =>
             {
                 if (eventArgs != null)
                 {
-                    taskCompletion.SetResult(this.HandleRosbridgeMessage(eventArgs.RosbridgeMessage, serviceName));
-                }
-                else
-                {
-                    taskCompletion.SetResult(null);
+                    JObject rosMessage = null;
+
+                    bool rosbridgeMessageHandled = false;
+
+                    try
+                    {
+                        rosbridgeMessageHandled = this.HandleRosbridgeMessage(eventArgs.RosbridgeMessage, ref rosMessage, serviceName);
+                    }
+                    catch (Exception e)
+                    {
+                        taskCompletionSource.SetException(e);
+                    }
+
+                    if (rosbridgeMessageHandled)
+                    {
+                        taskCompletionSource.SetResult(rosMessage);
+                    }
                 }
             };
 
-            this.rosbridgeMessageDispatcher.RosbridgeMessageReceived += rosbridgeMessageReceivedHanlder;
+            this.rosbridgeMessageDispatcher.RosbridgeMessageReceived += rosbridgeMessageReceivedHandler;
 
             Task.Run(async () =>
             {
@@ -56,14 +81,16 @@
 
                 await this.rosbridgeMessageDispatcher.SendAsync(serviceCallMessage);
 
-                this.rosbridgeMessageDispatcher.RosbridgeMessageReceived -= rosbridgeMessageReceivedHanlder;
+                await taskCompletionSource.Task;
+
+                this.rosbridgeMessageDispatcher.RosbridgeMessageReceived -= rosbridgeMessageReceivedHandler;
             });
 
-            return taskCompletion.Task;
+            return taskCompletionSource.Task;
         }
 
         protected abstract TServiceCall CreateServiceCallMessage(object serviceArgs = null, string serviceName = null);
 
-        protected abstract object HandleRosbridgeMessage(JObject rosbridgeMessage, string serviceName = null);
+        protected abstract bool HandleRosbridgeMessage(JObject rosbridgeMessage, ref JObject rosMessage, string serviceName = null);
     }
 }

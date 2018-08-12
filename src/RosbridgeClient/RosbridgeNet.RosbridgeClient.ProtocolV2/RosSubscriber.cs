@@ -1,5 +1,7 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2
 {
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.Common;
     using RosbridgeNet.RosbridgeClient.Common.EventArgs;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
@@ -49,20 +51,27 @@
             };
         }
 
-        protected override void RosbridgeMessageReceivedHandler(object sender, RosbridgeMessageReceivedEventArgs args)
+        protected override RosMessageReceivedEventArgs HandleRosbridgeMessage(JObject rosbridgeMessage)
         {
-            if (args != null)
+            if (rosbridgeMessage != null)
             {
-                if (args.RosbridgeMessage != null)
-                {
-                    PublishMessage receivedPublishMessage = args.RosbridgeMessage.ToObject<PublishMessage>();
+                PublishMessage receivedPublishMessage = null;
 
-                    if (receivedPublishMessage != null && !string.IsNullOrEmpty(receivedPublishMessage.Topic) && receivedPublishMessage.Topic.Equals(this.Topic))
-                    {
-                        RaiseRosMessageReceived(new RosMessageReceivedEventArgs(receivedPublishMessage.Message));
-                    }
+                try
+                {
+                    receivedPublishMessage = rosbridgeMessage.ToObject<PublishMessage>();
+                }
+                catch (JsonSerializationException e)
+                {
+                }
+
+                if (receivedPublishMessage != null && object.Equals(receivedPublishMessage.Topic, this.Topic))
+                {
+                    return new RosMessageReceivedEventArgs(receivedPublishMessage);
                 }
             }
+
+            return null;
         }
     }
 }

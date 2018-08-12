@@ -1,8 +1,10 @@
 ﻿namespace RosbridgeNet.RosbridgeClient.ProtocolV2
 {
+    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using RosbridgeNet.RosbridgeClient.Common;
     using RosbridgeNet.RosbridgeClient.Common.Interfaces;
+    using RosbridgeNet.RosbridgeClient.ProtocolV2.Exceptions;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.RosOperations;
     using IRosServiceClient = RosbridgeNet.RosbridgeClient.ProtocolV2.Interfaces.IRosServiceClient;
@@ -15,11 +17,11 @@
 
         protected override CallServiceMessage CreateServiceCallMessage(object serviceArgs = null, string serviceName = null)
         {
-            JArray arguments = null;
+            JToken arguments = null;
 
             if (serviceArgs != null)
             {
-                arguments = JArray.FromObject(serviceArgs);
+                arguments = JToken.FromObject(serviceArgs);
             }
 
             string serviceToCall = serviceName ?? this.ServiceName;
@@ -34,23 +36,43 @@
             };
         }
 
-        protected override object HandleRosbridgeMessage(JObject rosbridgeMessage, string serviceName = null)
+        protected override bool HandleRosbridgeMessage(JObject rosbridgeMessage, ref JObject rosMessage, string serviceName = null)
         {
             string serviceToReceiveFrom = serviceName ?? this.ServiceName;
 
-            ServiceResponseMessage serviceResponse = rosbridgeMessage.ToObject<ServiceResponseMessage>();
+            ServiceResponseMessage serviceResponse = null;
 
-            if (serviceResponse != null && serviceResponse.Service.Equals(serviceToReceiveFrom) && this.MessageId.Equals(serviceResponse.Id))
+            try
+            {
+                serviceResponse = rosbridgeMessage.ToObject<ServiceResponseMessage>();
+            }
+            catch (JsonSerializationException e)
+            {
+            }
+
+            if (serviceResponse != null && object.Equals(serviceResponse.Service, serviceToReceiveFrom) && object.Equals(this.MessageId, serviceResponse.Id))
             {
                 if (serviceResponse.Values != null)
                 {
-                    object responseObject = serviceResponse.Values.ToObject<object>();
+                    if (serviceResponse.Values.Type == JTokenType.Object)
+                    {
+                        if (serviceResponse.Values.HasValues)
+                        {
+                            JObject responseObject = (JObject)serviceResponse.Values;
 
-                    return responseObject;
+                            rosMessage = responseObject;
+                        }
+
+                        return true;
+                    }
+                    else if (serviceResponse.Values.Type == JTokenType.String)
+                    {
+                        throw new RosServiceException(serviceResponse.Values.ToString());
+                    }
                 }
             }
 
-            return null;
+            return false;
         }
 
         public string MessageId { get; set; }

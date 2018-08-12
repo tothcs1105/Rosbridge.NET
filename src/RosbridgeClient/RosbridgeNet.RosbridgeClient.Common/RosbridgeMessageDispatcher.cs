@@ -59,7 +59,6 @@
 
                 try
                 {
-
                     await this.socket.ConnectAsync();
                 }
                 catch

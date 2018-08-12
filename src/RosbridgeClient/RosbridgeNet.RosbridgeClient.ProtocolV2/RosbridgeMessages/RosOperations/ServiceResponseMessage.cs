@@ -19,7 +19,7 @@
         /// Gets or sets the values that was provided by the service.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
-        public JArray Values { get; set; }
+        public JToken Values { get; set; }
 
         public ServiceResponseMessage() : base("service_response")
         {

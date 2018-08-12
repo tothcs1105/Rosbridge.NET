@@ -2,7 +2,7 @@
 {
     using RosbridgeNet.RosbridgeClient.ProtocolV2.RosbridgeMessages.Enums;
 
-    public interface IFragmentedRosMessageOperator
+    public interface IFragmentedMessageOperator
     {
         MessageCompressionLevel? MessageCompressionLevel { get; set; }
 
