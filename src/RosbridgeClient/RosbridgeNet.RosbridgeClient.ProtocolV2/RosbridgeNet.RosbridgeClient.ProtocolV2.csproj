@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
-    <Version>1.0.4</Version>
+    <Version>1.2.0</Version>
     <Authors>Csaba Tóth</Authors>
     <Description>A .NET Rosbridge client. The Rosbridge v2 protocol implementation.</Description>
     <Copyright>Copyright 2018</Copyright>
